@@ -1,0 +1,69 @@
+<div class="fill-screen relative container mx-auto overflow-x-none overscroll-contain place-content-center mt-10 mb-0">
+    <div class="flex justify-center">
+        <div class="flex justify-center xl:w-56 text-center mb-32">
+            <input #expenseInput class="
+                    text-center
+                    form-control
+                    block
+                    text-base
+                    font-normal
+                    text-violet-200
+                    placeholder:text-violet-300
+                    bg-clip-padding
+                    bg-violet-500
+                    transition
+                    ease-in-out
+                    text-8xl
+                    max-w-full
+                    overflow-hidden
+                    m-0
+                    focus:text-slate-50 hover:bg-violet-500 focus:outline-none" id="dollarValue" placeholder="$0"
+                (ngModelChange)="onExpenseChange($event)" [ngModel]="expenseAmountStr" />
+        </div>
+    </div>
+    <div class="flex justify-center">
+        <input class="
+            form-control
+            block
+            text-base
+            text-center
+            text-4xl
+            max-w-full
+            mb-10
+            whitespace-normal
+            font-normal
+            text-violet-200
+            placeholder:text-violet-300
+            bg-violet-500
+            bg-clip-padding
+            transition ease-in-out
+            m-0
+            focus:text-slate-50 focus:outline-none
+            " id="dollarValue" placeholder="Description" [(ngModel)]="description" />
+    </div>
+    <app-sliding-switch optionOne="Katie" optionTwo="Brad" (updateSwitchEvent)="setPayer($event)"></app-sliding-switch>
+    <app-sliding-switch optionOne="Not Final" optionTwo="Final" (updateSwitchEvent)="setFinal($event)">
+    </app-sliding-switch>
+    <div class="flex justify-center">
+        <button (click)="onSubmit()" type=" button" class="
+            inline-block
+            px-6 py-2.5
+            bg-violet-600
+            text-white font-medium text-xs
+            leading-tight uppercase
+            w-96
+            h-20
+            shadow-md
+            hover:shadow-lg
+            focus:shadow-lg
+            focus:outline-none
+            focus:ring-0
+            active:shadow-lg
+            absolute bottom-10
+            rounded-full
+            transition
+            duration-150 ease-in-out">
+            Submit</button>
+    </div>
+
+</div>

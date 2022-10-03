@@ -1,0 +1,33 @@
+<span [class]="translationClass" class="switch-foreground
+             w-48
+             text-center
+             bg-violet-600
+             h-20
+             absolute
+             rounded-full
+             mx-auto
+             transition-transform
+             -z-20"></span>
+<span class="switch-background w-96 text-center bg-violet-550 h-20 absolute rounded-full mx-auto -z-50"></span>
+<div class="flex space-x-0 justify-center mb-8 rounded-full z-10">
+    <button type="button" (click)="buttonOneWrapper()" class="
+        inline-block
+        w-48
+        h-20
+        bg-transparent
+        rounded-full
+        text-white font-medium text-xs
+        leading-tight uppercase
+        focus:outline-none focus:ring-0
+        transition duration-150 ease-in-out">{{optionOne}}</button>
+    <button type="button" (click)="buttonTwoWrapper()" class="
+        inline-block
+        w-48
+        h-20
+        bg-transparent
+        rounded-full
+        text-white font-medium text-xs
+        leading-tight uppercase
+        focus:outline-none focus:ring-0
+        transition duration-150 ease-in-out">{{optionTwo}}</button>
+</div>
