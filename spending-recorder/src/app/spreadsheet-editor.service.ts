@@ -8,7 +8,7 @@ import { Injectable } from '@angular/core';
 export class SpreadsheetEditorService {
   private readonly SPREADSHEET_ID = "10e7nLlT-bDaHKL5WcOdRDRzgukhu8L4VI55IVLWLkc8";
   private user: SocialUser | null = null;
-  private accessToken: string = "";
+  private accessToken: string | null = null;
 
   constructor(private authService: SocialAuthService, private httpClient: HttpClient) {
     this.authService.authState.subscribe((user) => {
@@ -24,8 +24,10 @@ export class SpreadsheetEditorService {
   }
 
   async appendLine(amount: number, description: string, payer: string, final: boolean) {
-    if (this.accessToken === "") {
+    if (this.accessToken === null) {
       this.accessToken = await this.authService.getAccessToken(GoogleLoginProvider.PROVIDER_ID);
+    } else {
+      await this.authService.refreshAccessToken(GoogleLoginProvider.PROVIDER_ID);
     }
     const date = new Date().toLocaleDateString();
     return this.httpClient

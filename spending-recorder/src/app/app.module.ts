@@ -25,6 +25,7 @@ import { SlidingSwitchComponent } from './sliding-switch/sliding-switch.componen
     {
       provide: 'SocialAuthServiceConfig',
       useValue: {
+        autoLogin: true,
         providers: [
           {
             id: GoogleLoginProvider.PROVIDER_ID,
