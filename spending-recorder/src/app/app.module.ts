@@ -25,7 +25,6 @@ import { SlidingSwitchComponent } from './sliding-switch/sliding-switch.componen
     {
       provide: 'SocialAuthServiceConfig',
       useValue: {
-        autoLogin: true,
         providers: [
           {
             id: GoogleLoginProvider.PROVIDER_ID,
@@ -34,7 +33,6 @@ import { SlidingSwitchComponent } from './sliding-switch/sliding-switch.componen
               {
                 scopes: "https://www.googleapis.com/auth/spreadsheets",
                 oneTapEnabled: true,
-                prompt: "none"
               }
             ),
           }

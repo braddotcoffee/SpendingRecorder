@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-sliding-switch',
@@ -12,10 +13,13 @@ export class SlidingSwitchComponent implements OnInit {
   @Input() optionOne = '';
   @Input() optionTwo = '';
   @Output() updateSwitchEvent = new EventEmitter<string>();
+  @Input()
+  events!: Observable<void>;
 
   constructor() { }
 
   ngOnInit(): void {
+    this.events.subscribe(() => this.translationClass = this.LEFT_SIDE);
   }
 
   buttonOneWrapper() {

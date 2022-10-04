@@ -8,13 +8,11 @@ import { Injectable } from '@angular/core';
 export class SpreadsheetEditorService {
   private readonly SPREADSHEET_ID = "10e7nLlT-bDaHKL5WcOdRDRzgukhu8L4VI55IVLWLkc8";
   private user: SocialUser | null = null;
-  private loggedIn: boolean = false;
   private accessToken: string = "";
 
   constructor(private authService: SocialAuthService, private httpClient: HttpClient) {
     this.authService.authState.subscribe((user) => {
       this.user = user;
-      this.loggedIn = (user != null);
       console.log(this.user)
     });
   }
@@ -30,7 +28,7 @@ export class SpreadsheetEditorService {
       this.accessToken = await this.authService.getAccessToken(GoogleLoginProvider.PROVIDER_ID);
     }
     const date = new Date().toLocaleDateString();
-    this.httpClient
+    return this.httpClient
       .post(
         this.buildRequestUrl(),
         {
@@ -50,6 +48,6 @@ export class SpreadsheetEditorService {
             Authorization: `Bearer ${this.accessToken}`
           }
         }
-      ).subscribe(response => console.log(response))
+      )
   }
 }

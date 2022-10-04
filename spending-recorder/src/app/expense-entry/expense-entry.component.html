@@ -41,8 +41,10 @@
             focus:text-slate-50 focus:outline-none
             " id="dollarValue" placeholder="Description" [(ngModel)]="description" />
     </div>
-    <app-sliding-switch optionOne="Katie" optionTwo="Brad" (updateSwitchEvent)="setPayer($event)"></app-sliding-switch>
-    <app-sliding-switch optionOne="Not Final" optionTwo="Final" (updateSwitchEvent)="setFinal($event)">
+    <app-sliding-switch [events]="resetEvent.asObservable()" optionOne="Katie" optionTwo="Brad"
+        (updateSwitchEvent)="setPayer($event)"></app-sliding-switch>
+    <app-sliding-switch [events]="resetEvent.asObservable()" optionOne="Not Final" optionTwo="Final"
+        (updateSwitchEvent)="setFinal($event)">
     </app-sliding-switch>
     <div class="flex justify-center">
         <button (click)="onSubmit()" type=" button" class="

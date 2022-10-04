@@ -1,5 +1,6 @@
 import { SocialUser, SocialAuthService } from '@abacritt/angularx-social-login';
 import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Subject } from 'rxjs';
 import { SpreadsheetEditorService } from '../spreadsheet-editor.service';
 
 @Component({
@@ -8,6 +9,7 @@ import { SpreadsheetEditorService } from '../spreadsheet-editor.service';
   styleUrls: ['./expense-entry.component.scss']
 })
 export class ExpenseEntryComponent implements OnInit {
+  resetEvent: Subject<void> = new Subject<void>();
   expenseAmount: number | null = null;
   expenseAmountStr: string | null = null;
   payer: string = "Katie";
@@ -53,6 +55,13 @@ export class ExpenseEntryComponent implements OnInit {
     console.log(this.payer)
     if (this.expenseAmount === null || this.description === null) return;
     this.spreadsheetEditor.appendLine(this.expenseAmount, this.description, this.payer, this.final)
+      .then(observable => observable.subscribe(() => {
+        this.final = false;
+        this.description = null;
+        this.payer = "Katie";
+        this.expenseAmountStr = null;
+        this.resetEvent.next();
+      }))
   }
 
 }
