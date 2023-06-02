@@ -6,7 +6,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ExpenseEntryComponent } from './expense-entry/expense-entry.component';
-import { GoogleLoginProvider, SocialAuthServiceConfig } from '@abacritt/angularx-social-login';
 import { SlidingSwitchComponent } from './sliding-switch/sliding-switch.component';
 
 @NgModule({
@@ -20,29 +19,6 @@ import { SlidingSwitchComponent } from './sliding-switch/sliding-switch.componen
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-  ],
-  providers: [
-    {
-      provide: 'SocialAuthServiceConfig',
-      useValue: {
-        autoLogin: true,
-        providers: [
-          {
-            id: GoogleLoginProvider.PROVIDER_ID,
-            provider: new GoogleLoginProvider(
-              '1047629961360-u19crfsim138dthiqm74h4fiseu09gi4.apps.googleusercontent.com',
-              {
-                scopes: "https://www.googleapis.com/auth/spreadsheets",
-                oneTapEnabled: true,
-              }
-            ),
-          }
-        ],
-        onError: (err: any) => {
-          console.error(err);
-        }
-      } as SocialAuthServiceConfig,
-    }
   ],
   bootstrap: [AppComponent]
 })

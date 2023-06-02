@@ -50,18 +50,15 @@ export class ExpenseEntryComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log(this.expenseAmount)
-    console.log(this.final)
-    console.log(this.payer)
     if (this.expenseAmount === null || this.description === null) return;
     this.spreadsheetEditor.appendLine(this.expenseAmount, this.description, this.payer, this.final)
-      .then(observable => observable.subscribe(() => {
+      .then(() => {
         this.final = false;
         this.description = null;
         this.payer = "Katie";
         this.expenseAmountStr = null;
         this.resetEvent.next();
-      }))
+      })
   }
 
 }
