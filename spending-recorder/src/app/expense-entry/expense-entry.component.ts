@@ -1,4 +1,3 @@
-import { SocialUser, SocialAuthService } from '@abacritt/angularx-social-login';
 import { ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs';
 import { SpreadsheetEditorService } from '../spreadsheet-editor.service';
