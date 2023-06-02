@@ -1,7 +1,6 @@
-import { SocialAuthService, SocialUser, GoogleLoginProvider } from '@abacritt/angularx-social-login';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Subject, first, firstValueFrom, map, switchMap } from 'rxjs';
+import { Subject, firstValueFrom } from 'rxjs';
 
 const MS_IN_SECOND = 1000;
 @Injectable({
@@ -14,7 +13,7 @@ export class SpreadsheetEditorService {
   private client: google.accounts.oauth2.TokenClient;
   private expirationTime: number = Date.now();
 
-  constructor(private authService: SocialAuthService, private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient) {
     this.client = google.accounts.oauth2.initTokenClient({
       client_id: '1047629961360-u19crfsim138dthiqm74h4fiseu09gi4.apps.googleusercontent.com',
       scope: 'https://www.googleapis.com/auth/spreadsheets',
@@ -32,41 +31,41 @@ export class SpreadsheetEditorService {
       + this.SPREADSHEET_ID
       + "/values/Sheet1:append?valueInputOption=USER_ENTERED"
   }
-  private ensureAccessToken() {
+  private async ensureAccessToken() {
     const timeUntilExpiration = this.expirationTime - Date.now();
+    const promise = firstValueFrom(this.accessTokenObservable);
     if (this.accessToken === null || timeUntilExpiration < MS_IN_SECOND) {
       this.client.requestAccessToken();
     } else {
       this.accessTokenObservable.next();
     }
+    return promise;
   }
 
-  appendLine(amount: number, description: string, payer: string, final: boolean) {
-    const promise = firstValueFrom(this.accessTokenObservable.pipe(first(), switchMap(() => {
-      const date = new Date().toLocaleDateString();
-      return this.httpClient
-        .post(
-          this.buildRequestUrl(),
-          {
-            "majorDimension": "ROWS",
-            "values": [
-              [
-                payer,
-                date,
-                amount,
-                description,
-                final ? "Yes" : "No"
-              ]
+  async appendLine(amount: number, description: string, payer: string, final: boolean) {
+    await this.ensureAccessToken();
+
+    const date = new Date().toLocaleDateString();
+    return this.httpClient
+      .post(
+        this.buildRequestUrl(),
+        {
+          "majorDimension": "ROWS",
+          "values": [
+            [
+              payer,
+              date,
+              amount,
+              description,
+              final ? "Yes" : "No"
             ]
-          },
-          {
-            headers: {
-              Authorization: `Bearer ${this.accessToken}`
-            }
+          ]
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${this.accessToken}`
           }
-        )
-    })));
-    this.ensureAccessToken();
-    return promise;
+        }
+      )
   }
 }
